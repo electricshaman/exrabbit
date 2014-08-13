@@ -139,6 +139,12 @@ defmodule Exrabbit.Utils do
 	def nack(channel, tag) do
 		:amqp_channel.call channel, basic_nack(delivery_tag: tag)
 	end
+        def nack(channel, tag, requeue) do
+                :amqp_channel.call channel, basic_nack(delivery_tag: tag, requeue: requeue)
+        end
+        def nack(channel, tag, multiple, requeue) do
+                :amqp_channel.call channel, basic_nack(delivery_tag: tag, multiple: multiple, requeue: requeue)
+        end
 
 	def get_messages_ack(channel, queue), do: get_messages(channel, queue, false)
 	def get_messages(channel, queue), do: get_messages(channel, queue, true)
